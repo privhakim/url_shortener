@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-screen flex items-center justify-center bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600">
+    <div class="relative group">
+        <!-- Glow Effect Container -->
+        <div class="absolute -inset-1 bg-gradient-to-r from-purple-400 to-pink-500 rounded-2xl opacity-0 
+                    group-hover:opacity-100 transition duration-300 blur-xl"></div>
+
+        <!-- Main Card -->
+        <div class="relative bg-white p-8 rounded-2xl shadow-xl w-full max-w-md text-center transition 
+                    transform duration-300 group-hover:scale-105 group-hover:shadow-2xl">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-4">🔗 Fancy URL Shortener</h2>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="mb-4">
+                        {% for category, message in messages %}
+                            <p class="text-red-600 font-semibold">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="space-y-4">
+                <input type="text" name="original_url" placeholder="Enter URL..." required 
+                    class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 transition shadow-md">
+
+                <input type="text" name="custom_code" placeholder="Custom short URL (optional)"
+                    class="w-full px-4 py-3 border mt-2 rounded-lg focus:outline-none focus:ring-4 focus:ring-green-500 transition shadow-md">
+
+                <button type="submit" 
+                    class="w-full py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold text-lg shadow-lg 
+                            transform transition hover:scale-105 hover:shadow-2xl">
+                    ✨ Shorten My Link
+                </button>
+            </form>
+
+            {% if short_url %}
+                <div class="mt-6 bg-gray-100 p-4 rounded-lg shadow-inner">
+                    <p class="text-gray-700 font-medium"> Here is your Shortened URL:</p>
+                    <a href="{{ short_url }}" target="_blank" 
+                        class="text-blue-600 font-bold underline text-lg hover:text-blue-800">
+                        {{ short_url }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
